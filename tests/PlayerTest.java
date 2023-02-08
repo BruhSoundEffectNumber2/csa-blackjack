@@ -12,11 +12,12 @@ public class PlayerTest {
   public void test1() {
     Player player = new Player("Damon", false);
 
-    player.setCard(0, new Card(0, 12));
+    player.setCard(0, new Card(2, 12));
     player.setCard(1, new Card(0, 11));
 
-    assertEquals(player.getHandValue(), 20);
-    assertEquals(player.isBust(), false);
+    System.out.println(player.getHandValue());
+    assertEquals(20, player.getHandValue());
+    assertEquals(false, player.isBust());
   }
 
   /*
@@ -29,12 +30,12 @@ public class PlayerTest {
   public void test2() {
     Player player = new Player("Damon", false);
 
-    player.setCard(0, new Card(0, 12));
-    player.setCard(1, new Card(0, 11));
+    player.setCard(0, new Card(3, 12));
+    player.setCard(1, new Card(4, 11));
     player.setCard(2, new Card(0, 10));
 
-    assertEquals(player.getHandValue(), 30);
-    assertEquals(player.isBust(), true);
+    assertEquals(30, player.getHandValue());
+    assertEquals(true, player.isBust());
   }
 
   /*
@@ -47,12 +48,12 @@ public class PlayerTest {
   public void test3() {
     Player player = new Player("Damon", false);
 
-    player.setCard(0, new Card(0, 12));
+    player.setCard(0, new Card(1, 12));
     player.setCard(1, new Card(0, 11));
-    player.setCard(2, new Card(0, 0));
+    player.setCard(2, new Card(2, 0));
 
-    assertEquals(player.getHandValue(), 21);
-    assertEquals(player.isBust(), false);
+    assertEquals(21, player.getHandValue());
+    assertEquals(false, player.isBust());
   }
 
   /*
@@ -64,10 +65,44 @@ public class PlayerTest {
   public void test4() {
     Player player = new Player("Damon", false);
 
-    player.setCard(0, new Card(0, 12));
-    player.setCard(1, new Card(0, 0));
+    player.setCard(0, new Card(3, 12));
+    player.setCard(1, new Card(4, 0));
 
-    assertEquals(player.getHandValue(), 21);
-    assertEquals(player.isBust(), false);
+    assertEquals(21, player.getHandValue());
+    assertEquals(false, player.isBust());
+  }
+
+  /*
+   * Two
+   * Ace
+   * Expected: 13
+   */
+  @Test
+  public void test5() {
+    Player player = new Player("Damon", false);
+
+    player.setCard(0, new Card(1, 1));
+    player.setCard(1, new Card(2, 0));
+
+    assertEquals(13, player.getHandValue());
+    assertEquals(false, player.isBust());
+  }
+
+  /*
+   * Three
+   * Five
+   * Two
+   * Expected: 10
+   */
+  @Test
+  public void test6() {
+    Player player = new Player("Damon", false);
+
+    player.setCard(0, new Card(0, 2));
+    player.setCard(1, new Card(2, 4));
+    player.setCard(2, new Card(4, 1));
+
+    assertEquals(10, player.getHandValue());
+    assertEquals(false, player.isBust());
   }
 }

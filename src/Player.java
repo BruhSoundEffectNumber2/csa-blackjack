@@ -32,6 +32,9 @@ public class Player {
 
     // Add the value of all non-aces together
     for (Card card : cards) {
+      if (card == null)
+        continue;
+
       if (card.value() != -1) {
         value += card.value();
       }
@@ -58,7 +61,11 @@ public class Player {
     }
 
     // If we have 5 cards and haven't gone bust, then it's a blackhack
-    if (cards.length == 5 && value <= 21) {
+    /*
+     * Because we are using an array, we will have null objects where we don't have
+     * any cards (ie. we have only 3 cards, so there are two empty "null" spaces).
+     */
+    if (numCards() == 5 && value <= 21) {
       return 21;
     }
 
@@ -72,11 +79,6 @@ public class Player {
   // TODO: Temporary function for testing
   public void setCard(int index, Card card) {
     cards[index] = card;
-  }
-
-  // TODO: Temporary function for testing
-  public void resetHand() {
-    cards = new Card[5];
   }
 
   /**
@@ -94,6 +96,11 @@ public class Player {
      * not the index I can find the card at.
      */
     for (Card card : cards) {
+      // Because our card array is filled with null, we need to check for it in our
+      // for loop
+      if (card == null)
+        continue;
+
       /*
        * If we look at the Javadoc, we can see that "card.value()" will return -1 if
        * it's an ace.
@@ -104,6 +111,20 @@ public class Player {
     }
 
     return acesFound;
+  }
+
+  /**
+   * Calculates the actual number of cards in the player's hand.
+   */
+  private int numCards() {
+    int num = 0;
+
+    for (Card card : cards) {
+      if (card != null)
+        num++;
+    }
+
+    return num;
   }
 
   // Hit: Add a card from the deck
