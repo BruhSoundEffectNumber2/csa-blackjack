@@ -6,6 +6,7 @@ public class Player {
   private boolean isDealer;
   private Card[] cards;
   private String name;
+  private int cash;
 
   ///////////////////////////////
   // Constructor
@@ -14,6 +15,7 @@ public class Player {
   public Player(String name, boolean isDealer) {
     this.isDealer = isDealer;
     this.name = name;
+    this.cash = Game.STARTING_CASH;
 
     /*
      * Per house rules, the maximum number of cards we can take is 5 (considered a
@@ -76,9 +78,18 @@ public class Player {
     return getHandValue() > 21;
   }
 
-  // TODO: Temporary function for testing
-  public void setCard(int index, Card card) {
-    cards[index] = card;
+  public void addCard(Card card) {
+    // We can only have 5 cards at any given time
+    if (numCards() == 5) {
+      throw new Error("Player::Cannot add another card to the hand because it's full.");
+    }
+
+    /*
+     * Because we want to add a card to the end, we can just use "numCards",
+     * which is indexed starting at 1. This has the effect of taking the index
+     * of the last card and adding 1 to it.
+     */
+    cards[numCards()] = card;
   }
 
   /**
