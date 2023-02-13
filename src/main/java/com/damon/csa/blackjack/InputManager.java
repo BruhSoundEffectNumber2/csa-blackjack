@@ -1,3 +1,5 @@
+package com.damon.csa.blackjack;
+
 import java.io.InputStream;
 import java.util.Scanner;
 

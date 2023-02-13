@@ -1,3 +1,5 @@
+package com.damon.csa.blackjack;
+
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;

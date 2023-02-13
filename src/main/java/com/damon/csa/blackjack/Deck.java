@@ -1,3 +1,5 @@
+package com.damon.csa.blackjack;
+
 import java.util.Random;
 
 public class Deck {
@@ -38,8 +40,10 @@ public class Deck {
       }
     }
 
-    // We have looked at every single card in the deck, but all of them have been dealt
-    // We can throw an error because we should not have gotten to this point in the first place
+    // We have looked at every single card in the deck, but all of them have been
+    // dealt
+    // We can throw an error because we should not have gotten to this point in the
+    // first place
     throw new Error("Deck::Every card in the deck has already been dealt.");
   }
 
