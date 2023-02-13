@@ -3,13 +3,13 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 public class PlayerTest {
-  /*
+  /**
    * King
    * Queen
    * Expected: 20
    */
   @Test
-  public void test1() {
+  public void handTest1() {
     Player player = new Player("Damon", false);
 
     player.addCard(new Card(2, 12));
@@ -20,14 +20,14 @@ public class PlayerTest {
     assertEquals(false, player.isBust());
   }
 
-  /*
+  /**
    * King
    * Queen
    * Jack
    * Expected: 30 BUST
    */
   @Test
-  public void test2() {
+  public void handTest2() {
     Player player = new Player("Damon", false);
 
     player.addCard(new Card(3, 12));
@@ -38,14 +38,14 @@ public class PlayerTest {
     assertEquals(true, player.isBust());
   }
 
-  /*
+  /**
    * King
    * Queen
    * Ace
    * Expected: 21
    */
   @Test
-  public void test3() {
+  public void handTest3() {
     Player player = new Player("Damon", false);
 
     player.addCard(new Card(1, 12));
@@ -56,13 +56,13 @@ public class PlayerTest {
     assertEquals(false, player.isBust());
   }
 
-  /*
+  /**
    * King
    * Ace
    * Expected: 21
    */
   @Test
-  public void test4() {
+  public void handTest4() {
     Player player = new Player("Damon", false);
 
     player.addCard(new Card(3, 12));
@@ -72,13 +72,13 @@ public class PlayerTest {
     assertEquals(false, player.isBust());
   }
 
-  /*
+  /**
    * Two
    * Ace
    * Expected: 13
    */
   @Test
-  public void test5() {
+  public void handTest5() {
     Player player = new Player("Damon", false);
 
     player.addCard(new Card(1, 1));
@@ -88,14 +88,14 @@ public class PlayerTest {
     assertEquals(false, player.isBust());
   }
 
-  /*
+  /**
    * Three
    * Five
    * Two
    * Expected: 10
    */
   @Test
-  public void test6() {
+  public void handTest6() {
     Player player = new Player("Damon", false);
 
     player.addCard(new Card(0, 2));

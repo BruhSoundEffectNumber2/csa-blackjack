@@ -22,6 +22,8 @@ The code is organized the following main classes:
 
 - Card: A card of a certain suite and rank. Contains several helper classes to get the value of and display a card in blackjack.
 
+- InputManager: Abstracts and validates user input, allowing game components to easily get player decisions.
+
 ## Replit
 
 This project is developed using Visual Studio Code, and compatibility with Replit for running or modifying this is likely, but not guaranteed. Unit Tests may be more complicated, but should work with some tweaking.
