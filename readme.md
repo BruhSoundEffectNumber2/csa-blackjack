@@ -12,17 +12,19 @@ The code here is merely one way to complete this, and there are many other optio
 
 The code is organized the following main classes:
 
-- Main: Entry point for the program. Creates the initial game components, but does nothing else.
+- `Main`: Entry point for the program. Creates the initial game components, but does nothing else.
 
-- Game: Controls the flow of the game, who is currently making a choice, wins or loses, etc.
+- `Game`: Controls the flow of the game, who is currently making a choice, wins or loses, etc.
 
-- Player: A player, containing the concept of a hand of several cards, and money to bet. This object does not necessarily _perform_ the action of taking a card or making a bet, but it is affected by those actions (user input).
+- `Player`: A player, containing the concept of a hand of several cards, and money to bet. This object does not necessarily _perform_ the action of taking a card or making a bet, but it is affected by those actions (user input).
 
-- Deck: A deck of 52 cards that can be shuffled. Cards can be removed from the deck, and will not be dealt again.
+- `Deck`: A deck of 52 cards that can be shuffled. Cards can be removed from the deck, and will not be dealt again.
 
-- Card: A card of a certain suite and rank. Contains several helper classes to get the value of and display a card in blackjack.
+- `Card`: A card of a certain suite and rank. Contains several helper classes to get the value of and display a card in blackjack.
 
-- InputManager: Abstracts and validates user input, allowing game components to easily get player decisions.
+- `InputManager`: Abstracts and validates user input, allowing game components to easily get player decisions.
+
+- `DisplayManager`: Helper functions to display complex strings, cards, clear the screen, etc.
 
 ## Replit
 

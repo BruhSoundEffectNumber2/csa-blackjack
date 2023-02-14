@@ -5,10 +5,10 @@ public class Player {
   // Properties
   ///////////////////////////////
 
-  private boolean isDealer;
+  public boolean isDealer;
   private Card[] cards;
-  private String name;
-  private int cash;
+  public String name;
+  public int cash;
 
   ///////////////////////////////
   // Constructor

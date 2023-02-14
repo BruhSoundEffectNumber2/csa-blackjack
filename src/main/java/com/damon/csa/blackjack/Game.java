@@ -9,6 +9,7 @@ public class Game {
   public static final int MIN_BET = 5;
 
   private InputManager input;
+  private DisplayManager output;
 
   private int numPlayers;
   private Player[] players;
@@ -29,6 +30,7 @@ public class Game {
 
   public Game(int numPlayers) {
     input = new InputManager(System.in);
+    output = new DisplayManager(System.out);
 
     this.numPlayers = numPlayers;
     players = new Player[numPlayers];
@@ -42,12 +44,13 @@ public class Game {
     dealer = new Player("Gus 'Dealer' Reiber", true);
 
     for (int i = 0; i < numPlayers; i++) {
-      System.out.println("Player " + (i + 1) + ", what is your name?");
+      output.print("Player %d, what is your name?", (i + 1));
       String name = input.getTrimmedText();
 
       players[i] = new Player(name, false);
 
-      System.out.println("Hello " + name + ".");
+      output.print("Hello %s, please place your bet.", name);
+      output.print("The minimum bet is $%d. You have $%d.", MIN_BET, players[i].cash);
     }
   }
 
