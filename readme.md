@@ -26,9 +26,9 @@ The code is organized the following main classes:
 
 ## Replit
 
-This project is developed using Visual Studio Code, and compatibility with Replit for running or modifying this is likely, but not guaranteed. Unit Tests may be more complicated, but should work with some tweaking.
+This project is developed using Visual Studio Code, although Replit should work without any modification.
 
-In the future, I will probably test if Replit will work out of the box, and if it doesn't, make a guide on how to make it work.
+In order to run the unit tests in Replit, run `mvn test` in the console, and Maven will show the results.
 
 ## Documentation
 
