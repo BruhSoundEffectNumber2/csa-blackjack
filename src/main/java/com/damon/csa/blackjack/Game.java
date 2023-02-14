@@ -54,6 +54,37 @@ public class Game {
   private void start() {
     deck = new Deck();
     deck.shuffle();
+  }
+
+  private void playerBets() {
+
+  }
+
+  private void dealPlayerCards() {
+
+  }
+
+  private void dealDealerHoleCard() {
+
+  }
+
+  private void dealDealerFaceCard() {
+
+  }
+
+  private void playPlayerHands() {
+
+  }
+
+  private void showDealerHoleCard() {
+
+  }
+
+  private void playDealerHand() {
+
+  }
+
+  private void determineWinner() {
 
   }
 }
