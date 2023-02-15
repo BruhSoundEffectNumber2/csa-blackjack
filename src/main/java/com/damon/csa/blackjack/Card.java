@@ -30,10 +30,6 @@ public class Card {
     return values[rank];
   }
 
-  public String displayString() {
-    return suites[suite] + ranks[rank];
-  }
-
   @Override
   public String toString() {
     return "card: " + suite + " | " + rank;

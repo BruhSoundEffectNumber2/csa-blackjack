@@ -35,15 +35,37 @@ public class Game {
     this.numPlayers = numPlayers;
     players = new Player[numPlayers];
 
+    deck = new Deck();
+  }
+
+  ///////////////////////////////
+  // Methods
+  ///////////////////////////////
+
+  public void start() {
     createPlayers();
 
-    start();
+    deck.shuffle();
+
+    dealPlayerCards();
+
+    dealDealerHoleCard();
+
+    dealDealerFaceCard();
+
+    playPlayerHands();
+
+    showDealerHoleCard();
+
+    playDealerHand();
   }
 
   private void createPlayers() {
     dealer = new Player("Gus 'Dealer' Reiber", true);
 
     for (int i = 0; i < numPlayers; i++) {
+      output.clearScreen();
+      output.printHeader("Getting Player Info");
       output.print("Player %d, what is your name?", (i + 1));
       String name = input.getTrimmedText();
 
@@ -51,32 +73,32 @@ public class Game {
 
       output.print("Hello %s, please place your bet.", name);
       output.print("The minimum bet is $%d. You have $%d.", MIN_BET, players[i].cash);
+
+      // TODO: What if the player does not have enough to make the minimum bet?
+      // TODO: Based on the flowchart, betting might get moved into its own function
+      int bet = input.getNumber(MIN_BET, players[i].cash + 1);
+      players[i].cash -= bet;
+      players[i].bet = bet;
     }
   }
 
-  private void start() {
-    deck = new Deck();
-    deck.shuffle();
-  }
-
-  private void playerBets() {
-
-  }
-
   private void dealPlayerCards() {
-
+    for (int i = 0; i < players.length; i++) {
+      players[i].addCard(deck.deal());
+      players[i].addCard(deck.deal());
+    }
   }
 
   private void dealDealerHoleCard() {
-
+    dealer.addCard(deck.deal());
   }
 
   private void dealDealerFaceCard() {
-
+    dealer.addCard(deck.deal());
   }
 
   private void playPlayerHands() {
-
+    output.displayHand(dealer);
   }
 
   private void showDealerHoleCard() {

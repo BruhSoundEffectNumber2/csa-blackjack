@@ -6,9 +6,10 @@ public class Player {
   ///////////////////////////////
 
   public boolean isDealer;
-  private Card[] cards;
+  public Card[] cards;
   public String name;
   public int cash;
+  public int bet;
 
   ///////////////////////////////
   // Constructor
@@ -18,6 +19,7 @@ public class Player {
     this.isDealer = isDealer;
     this.name = name;
     this.cash = Game.STARTING_CASH;
+    this.bet = 0;
 
     /*
      * Per house rules, the maximum number of cards we can take is 5 (considered a
@@ -25,6 +27,10 @@ public class Player {
      */
     cards = new Card[5];
   }
+
+  ///////////////////////////////
+  // Methods
+  ///////////////////////////////
 
   /**
    * Calculates the value of the player's hand.
@@ -46,6 +52,7 @@ public class Player {
 
     // Now, we need to go through all the aces
     for (int i = 0; i < numAces(); i++) {
+      // FIXME: There's a bug in calculating the value of aces
       /*
        * In blackjack, the value of an ace is 11 UNLESS that would cause the value to
        * be over 21.
@@ -139,21 +146,4 @@ public class Player {
 
     return num;
   }
-
-  // Hit: Add a card from the deck
-  // Stand: Advance a card from the game
-  // Bet: Add money to the pot
-  // Bust: Go over 21 and lose
-
-  /*
-   * Turn ends if:
-   * Straight --> 21
-   * CHOICE (Hit or Stand)
-   * Bust --> Lose
-   * 5 Cards --> 21
-   * Do above for all players and dealer
-   * Once dealer plays:
-   * If the dealer is under 17, then they take cards until 17
-   * Gets 21 --> Everybody loses
-   */
 }

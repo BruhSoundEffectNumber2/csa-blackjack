@@ -35,13 +35,17 @@ public class InputManager {
   public int getNumber() {
     while (true) {
       try {
-        return scanner.nextInt();
+        String raw = getTrimmedText();
+        int num = Integer.parseInt(raw);
+
+        return num;
       } catch (Exception e) {
         System.out.println("Invalid answer. Please enter a number.");
       }
     }
   }
 
+  // TODO: It might be better to make the max inclusive
   /**
    * Gets the next number as an integer, that is at least the minimum,
    * and less than the maximum. If the input is invalid,
@@ -53,7 +57,7 @@ public class InputManager {
   public int getNumber(int min, int max) {
     while (true) {
       try {
-        int result = scanner.nextInt();
+        int result = Integer.parseInt(getTrimmedText());
 
         if (result < min || result >= max) {
           // We still throw an exception because the user entered an invalid number
