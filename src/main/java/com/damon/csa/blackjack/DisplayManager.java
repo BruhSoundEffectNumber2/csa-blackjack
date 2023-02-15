@@ -1,6 +1,7 @@
 package com.damon.csa.blackjack;
 
 import java.io.PrintStream;
+import java.io.PrintWriter;
 
 public class DisplayManager {
   ///////////////////////////////
@@ -13,17 +14,25 @@ public class DisplayManager {
   private static final String ANSI_RED = "\u001B[31m";
   private static final String ANSI_WHITE_BG = "\u001B[47m";
 
-  private static final String[] SUITS = { "S", "H", "D", "C" };
+  private static final String[] SUITS = { "\u2660", "\u2665", "\u2666", "\u2663" };
   private static final String[] SPECIAL_RANKS = { "A", "J", "Q", "K" };
 
-  private PrintStream output;
+  private PrintWriter output;
 
   ///////////////////////////////
   // Constructor
   ///////////////////////////////
 
   public DisplayManager(PrintStream outputStream) {
-    output = outputStream;
+    output = new PrintWriter(outputStream, true);
+  }
+
+  ///////////////////////////////
+  // Methods
+  ///////////////////////////////
+
+  public void close() {
+    output.close();
   }
 
   public void clearScreen() {
@@ -47,6 +56,12 @@ public class DisplayManager {
         continue;
 
       System.out.print(ANSI_WHITE_BG);
+
+      // Hearts and Diamonds are colored red
+      if (card.suite == 1 || card.suite == 2) {
+        System.out.print(ANSI_RED);
+      }
+
       System.out.print(SUITS[card.suite]);
 
       switch (card.rank) {

@@ -58,6 +58,8 @@ public class Game {
     showDealerHoleCard();
 
     playDealerHand();
+
+    output.close();
   }
 
   private void createPlayers() {
