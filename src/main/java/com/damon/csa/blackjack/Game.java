@@ -92,7 +92,11 @@ public class Game {
   }
 
   private void dealDealerHoleCard() {
-    dealer.addCard(deck.deal());
+    Card card = deck.deal();
+    // This is the only case where the card is face down, so set it here
+    card.faceUp = false;
+
+    dealer.addCard(card);
   }
 
   private void dealDealerFaceCard() {
@@ -100,11 +104,22 @@ public class Game {
   }
 
   private void playPlayerHands() {
-    output.displayHand(dealer);
+    output.clearScreen();
+
+    for (Player player : players) {
+      output.displayHand(dealer);
+
+      output.displayHand(player);
+      int decision = input.getDecision(new String[] { "Hit", "Stand" });
+    }
   }
 
   private void showDealerHoleCard() {
-
+    // Because we aren't sure what card is face down, just set all cards to face up
+    for (Card card : dealer.cards) {
+      if (card != null)
+        card.faceUp = true;
+    }
   }
 
   private void playDealerHand() {

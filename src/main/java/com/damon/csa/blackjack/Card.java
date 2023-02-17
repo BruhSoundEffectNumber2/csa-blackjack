@@ -10,14 +10,20 @@ public class Card {
   // Ace, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King
   int rank;
 
+  // In almost every case, the card is face up, but the dealers hole card starts
+  // face down
+  boolean faceUp;
+
   public Card(int index) {
     this.suite = index / 13;
     this.rank = index % 13;
+    this.faceUp = true;
   }
 
   public Card(int suit, int rank) {
     this.suite = suit;
     this.rank = rank;
+    this.faceUp = true;
   }
 
   /**

@@ -51,7 +51,8 @@ public class Player {
     }
 
     // Now, we need to go through all the aces
-    for (int i = 0; i < numAces(); i++) {
+    int numAces = numAces();
+    for (int i = 0; i < numAces; i++) {
       // FIXME: There's a bug in calculating the value of aces
       /*
        * In blackjack, the value of an ace is 11 UNLESS that would cause the value to

@@ -62,6 +62,23 @@ public class DisplayManager {
         System.out.print(ANSI_RED);
       }
 
+      if (card.faceUp == false) {
+        /*
+         * When we have a face down card, we want to show just the back of it,
+         * so we print out 2 empty spaces with a white background, reset the
+         * console, then add a space for the next card. Then, go to th next card.
+         * 
+         * Take note that I am avoiding nesting here. I could have wrapped the entire
+         * following block of code in a check for a face up card. However,
+         * that would have really started to nest the code to an excessive amount.
+         * The case of a face down card only happens once in blackjack, so
+         * we check for that case only, and then do some special logic for that,
+         * instead of making the very common case harder to read.
+         */
+        System.out.print("  " + ANSI_RESET + " ");
+        continue;
+      }
+
       System.out.print(SUITS[card.suite]);
 
       switch (card.rank) {
