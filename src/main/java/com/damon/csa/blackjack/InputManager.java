@@ -18,6 +18,17 @@ public class InputManager {
     scanner = new Scanner(stream);
   }
 
+  ///////////////////////////////
+  // Methods
+  ///////////////////////////////
+
+  // TODO: DisplayManager may be better than directly using System.out
+
+  public void waitForInput() {
+    System.out.println("Press Enter to continue...");
+    scanner.nextLine();
+  }
+
   /**
    * Gets the next text input, trimming whitespace at the start and end.
    * Works for only one line of text at a time.

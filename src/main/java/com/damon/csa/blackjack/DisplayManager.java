@@ -17,23 +17,19 @@ public class DisplayManager {
   private static final String[] SUITS = { "\u2660", "\u2665", "\u2666", "\u2663" };
   private static final String[] SPECIAL_RANKS = { "A", "J", "Q", "K" };
 
-  private PrintWriter output;
+  private PrintStream output;
 
   ///////////////////////////////
   // Constructor
   ///////////////////////////////
 
   public DisplayManager(PrintStream outputStream) {
-    output = new PrintWriter(outputStream, true);
+    output = outputStream;
   }
 
   ///////////////////////////////
   // Methods
   ///////////////////////////////
-
-  public void close() {
-    output.close();
-  }
 
   public void clearScreen() {
     System.out.print("\033[H\033[2J");
@@ -48,8 +44,26 @@ public class DisplayManager {
     output.println(String.format(ANSI_GREEN + format + ANSI_RESET, args));
   }
 
+  public void newline() {
+    System.out.print("\n");
+  }
+
   public void displayHand(Player player) {
-    printHeader("%s's Hand:", player.name);
+    /*
+     * When the dealer has a face down card, we don't want to display
+     * the actual value of their hand. So we originally set the text
+     * we are going to display to be the actual value, then, if there is a face down
+     * card, the player can't know what the actual value is, so we override the
+     * variable.
+     */
+    String handValue = Integer.toString(player.getHandValue());
+
+    if (player.hasFaceDownCard()) {
+      // TODO: Maybe we could only show the values of cards that aren't face down
+      handValue = "?";
+    }
+
+    printHeader("%s's Hand (Value: %s):", player.name, handValue);
 
     for (Card card : player.cards) {
       if (card == null)

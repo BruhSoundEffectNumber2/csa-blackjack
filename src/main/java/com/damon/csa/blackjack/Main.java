@@ -7,7 +7,7 @@ public class Main {
      * so supporting multiple players is irrelevant. In the future,
      * that topic may be discussed, but there are many options.
      */
-    new Game(1).start();
+    new Game(4).start();
 
     /*
      * InputManager in = new InputManager(System.in);

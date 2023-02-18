@@ -33,6 +33,18 @@ public class Player {
   ///////////////////////////////
 
   /**
+   * Checks if there are any cards in the Player's hand that are face down.
+   */
+  public boolean hasFaceDownCard() {
+    for (Card card : cards) {
+      if (card != null && card.faceUp == false)
+        return true;
+    }
+
+    return false;
+  }
+
+  /**
    * Calculates the value of the player's hand.
    * 
    * @return A number that is >= 0.
