@@ -23,6 +23,8 @@ public class Round {
 
   public Round(int numPlayers, InputManager input, DisplayManager output) {
     this.numPlayers = numPlayers;
+    this.input = input;
+    this.output = output;
 
     this.players = new Player[numPlayers];
     this.bets = new int[numPlayers];
