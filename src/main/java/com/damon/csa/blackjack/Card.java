@@ -4,7 +4,7 @@ public class Card {
   private static int[] values = { -1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10 };
 
   // Spades, Hearts, Diamonds, Clubs
-  int suite;
+  int suit;
   // Ace, Two, Three, etc.
   int rank;
 
@@ -13,13 +13,13 @@ public class Card {
   boolean faceUp;
 
   public Card(int index) {
-    this.suite = index / 13;
+    this.suit = index / 13;
     this.rank = index % 13;
     this.faceUp = true;
   }
 
   public Card(int suit, int rank) {
-    this.suite = suit;
+    this.suit = suit;
     this.rank = rank;
     this.faceUp = true;
   }
@@ -36,6 +36,6 @@ public class Card {
 
   @Override
   public String toString() {
-    return "card: " + suite + " | " + rank;
+    return "card: " + suit + " | " + rank;
   }
 }

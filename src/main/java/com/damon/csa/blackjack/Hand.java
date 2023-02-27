@@ -34,6 +34,16 @@ public class Hand {
     cards.add(card);
   }
 
+  public boolean hasFaceDownCard() {
+    for (Card card : cards) {
+      if (card.faceUp == false) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   /**
    * Calculates the value of the player's hand.
    * 

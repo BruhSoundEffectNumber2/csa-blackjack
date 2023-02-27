@@ -56,29 +56,28 @@ public class InputManager {
     }
   }
 
-  // TODO: It might be better to make the max inclusive
   /**
    * Gets the next number as an integer, that is at least the minimum,
-   * and less than the maximum. If the input is invalid,
+   * and at most the maximum. If the input is invalid,
    * then the user will be shown the question again.
    * 
    * @param min The minimum number that is accepted (inclusive).
-   * @param max The maximum number that is accepted (exclusive).
+   * @param max The maximum number that is accepted (inclusive).
    */
   public int getNumber(int min, int max) {
     while (true) {
       try {
         int result = Integer.parseInt(getTrimmedText());
 
-        if (result < min || result >= max) {
+        if (result < min || result > max) {
           // We still throw an exception because the user entered an invalid number
           throw new Exception();
         }
 
         return result;
       } catch (Exception e) {
-        System.out.println("Invalid answer. Please enter a number that is at least "
-            + min + " and less than " + max);
+        System.out.println("Invalid answer. Please enter a number between "
+            + min + " and " + max);
       }
     }
   }
