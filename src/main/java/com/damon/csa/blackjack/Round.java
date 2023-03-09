@@ -40,6 +40,12 @@ public class Round {
     createPlayers();
 
     deck.shuffle();
+
+    dealCards();
+
+    for (Player player : players) {
+      playerMove(player);
+    }
   }
 
   private void createPlayers() {
@@ -63,5 +69,33 @@ public class Round {
       players[i].cash -= bet;
       bets[i] = bet;
     }
+  }
+
+  private void dealCards() {
+    for (Player player : players) {
+      player.hand.addCard(deck.deal());
+      player.hand.addCard(deck.deal());
+    }
+
+    // Because this is the only time we deal a card facing down, we just
+    // store the card in a temp variable and set it to be face down
+    Card faceDownCard = deck.deal();
+    faceDownCard.faceUp = false;
+    dealer.hand.addCard(faceDownCard);
+
+    dealer.hand.addCard(deck.deal());
+  }
+
+  private void playerMove(Player player) {
+    output.clearScreen();
+
+    output.printHeader("%s's Turn", player.name);
+    output.displayHand(player);
+    output.newline();
+
+    int choice = input.getDecision(new String[] { "Hit", "Stand" });
+    output.newline();
+
+    
   }
 }
