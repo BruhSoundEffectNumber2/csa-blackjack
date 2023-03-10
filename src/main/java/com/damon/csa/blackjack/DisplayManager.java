@@ -1,7 +1,6 @@
 package com.damon.csa.blackjack;
 
 import java.io.PrintStream;
-import java.io.PrintWriter;
 
 public class DisplayManager {
   ///////////////////////////////

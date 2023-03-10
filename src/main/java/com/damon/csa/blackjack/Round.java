@@ -44,7 +44,7 @@ public class Round {
     dealCards();
 
     for (Player player : players) {
-      playerMove(player);
+      playerMove(player, true);
     }
   }
 
@@ -86,7 +86,7 @@ public class Round {
     dealer.hand.addCard(deck.deal());
   }
 
-  private void playerMove(Player player) {
+  private void playerMove(Player player, boolean firstTime) {
     output.clearScreen();
 
     output.printHeader("%s's Turn", player.name);
@@ -96,6 +96,15 @@ public class Round {
     int choice = input.getDecision(new String[] { "Hit", "Stand" });
     output.newline();
 
-    
+    switch (choice) {
+      case 0 -> {
+        // Hit
+
+      }
+      case 1 -> {
+        // Stand
+      }
+      default -> throw new Error("Choice was invalid.");
+    }
   }
 }
