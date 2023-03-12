@@ -14,9 +14,13 @@ The code is organized the following main classes:
 
 - `Main`: Entry point for the program. Creates the initial game components, but does nothing else.
 
-- `Game`: Controls the flow of the game, who is currently making a choice, wins or loses, etc.
+- `Game`: Creates the initial players, and starts rounds of the game.
 
-- `Player`: A player, containing the concept of a hand of several cards, and money to bet. This object does not necessarily _perform_ the action of taking a card or making a bet, but it is affected by those actions (user input).
+- `Round`: A round of blackjack, including bets, moves, and winning/losing.
+
+- `Player`: A player, containing a hand, cash, and a bet.
+
+- `Hand`: A hand of several cards that has some value.
 
 - `Deck`: A deck of 52 cards that can be shuffled. Cards can be removed from the deck, and will not be dealt again.
 
@@ -28,13 +32,13 @@ The code is organized the following main classes:
 
 ## Replit
 
-This project is developed using Visual Studio Code, although Replit should work without any modification.
+This project is developed using Visual Studio Code, but Replit will work out of the box, just press the Run button.
 
 In order to run the unit tests in Replit, run `mvn test` in the console, and Maven will show the results.
 
 ## Documentation
 
-I have worked to make the code clearly commented and documented, but some sections may be better than others. If there is any section that is particularly confusing, feel free to talk to/email me and I will explain it and rewrite/add documentation to explain it more clearly
+I have worked to make the code clear, commented, and documented, but some sections may be better than others. If there is any section that is particularly confusing, feel free to talk to/email me and I will explain it and rewrite/add documentation to explain it more clear.
 
 I have also created some flowcharts for certain aspects of the game. These are all simplified, but are a good starting point for anyone.
 
@@ -45,4 +49,4 @@ I have also created some flowcharts for certain aspects of the game. These are a
 
 Unit Tests are used for several functions, but mainly serve as convenient ways to make sure certain aspects "units" of the program are working correctly, both in the creation of the feature, and any changes afterward.
 
-You will save a lot of time debugging if you begin to experiment with them. The Player or Card is an excellent starting point for Unit Tests.
+You will save a lot of time debugging if you begin to experiment with them. The Hand or Card is an excellent starting point for Unit Tests.
