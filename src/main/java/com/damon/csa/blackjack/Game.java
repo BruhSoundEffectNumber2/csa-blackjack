@@ -1,5 +1,8 @@
 package com.damon.csa.blackjack;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Game {
   ///////////////////////////////
   // Properties
@@ -13,13 +16,17 @@ public class Game {
 
   private Round currentRound;
 
+  private ArrayList<Player> players;
+
   ///////////////////////////////
   // Constructor
   ///////////////////////////////
 
   public Game() {
-    input = new InputManager(System.in);
-    output = new DisplayManager(System.out);
+    this.input = new InputManager(System.in);
+    this.output = new DisplayManager(System.out);
+
+    this.players = new ArrayList<>();
   }
 
   ///////////////////////////////
@@ -32,25 +39,70 @@ public class Game {
     output.printHeader("Blackjack");
     output.print("How many people will be playing (1 to 4)?");
 
-    int numPlayers = input.getNumber(1, 4);
+    createPlayers(input.getNumber(1, 4));
 
     while (true) {
       // Play a round
-      currentRound = new Round(numPlayers, input, output);
+      currentRound = new Round(players, input, output);
       currentRound.play();
+
+      removeDonePlayers();
 
       output.clearScreen();
 
-      output.printHeader("Play Again?");
-      output.print("Would you like to play again?");
+      if (players.size() > 0) {
+        output.printHeader("Play Again?");
+        output.print("Would you like to play again?");
 
-      if (input.getDecision(new String[] { "Yes", "No" }) == 1) {
+        if (input.getDecision(new String[] { "Yes", "No" }) == 1) {
+          break;
+        }
+      } else {
+        output.printHeader("Game Over");
+        output.print("There are no players left who can afford to play.");
+        output.print("The game will now end.");
+        output.newline();
+
+        input.waitForInput();
+
         break;
       }
     }
 
     output.clearScreen();
 
-    output.print("Thank You for Playing!");
+    output.printHeader("Thank You for Playing!");
+  }
+
+  private void createPlayers(int number) {
+    for (int i = 0; i < number; i++) {
+      output.clearScreen();
+
+      output.printHeader("Getting Player Info");
+      output.print("Player %d, what is your name?", (i + 1));
+
+      String name = input.getTrimmedText();
+
+      players.add(i, new Player(name, false));
+    }
+  }
+
+  private void removeDonePlayers() {
+    Player[] removing = currentRound.getDonePlayers();
+
+    if (removing.length > 0) {
+      output.clearScreen();
+
+      output
+          .printHeader("The following players do not have enough money to make the minimum bet and are being removed:");
+
+      for (Player player : removing) {
+        players.remove(player);
+        output.print("%s", player.name);
+      }
+      output.newline();
+
+      input.waitForInput();
+    }
   }
 }

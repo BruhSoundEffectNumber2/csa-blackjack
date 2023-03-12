@@ -9,8 +9,8 @@ public class Deck {
   public Deck() {
     cards = new ArrayList<>(52);
 
-    for (int i = 0; i < cards.size(); i++) {
-      cards.set(i, new Card(i));
+    for (int i = 0; i < 52; i++) {
+      cards.add(i, new Card(i));
     }
   }
 
@@ -24,7 +24,8 @@ public class Deck {
       throw new Error("Deck::Every card in the deck has already been dealt.");
     }
 
-    return cards.remove(0);
+    // Generally, we want to remove the topmost card from the deck
+    return cards.remove(cards.size() - 1);
   }
 
   @Override

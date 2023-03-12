@@ -45,6 +45,15 @@ public class Hand {
   }
 
   /**
+   * Makes all cards in the hand face up.
+   */
+  public void makeCardsFaceUp() {
+    for (Card card : cards) {
+      card.faceUp = true;
+    }
+  }
+
+  /**
    * Calculates the value of the player's hand.
    * 
    * @return An integer score that is at least 0.

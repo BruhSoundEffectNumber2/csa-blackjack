@@ -54,7 +54,7 @@ public class DisplayManager {
       handValueText = Integer.toString(player.hand.getValue());
     }
 
-    printHeader("%s's Hand (Value: %s):", player.name, handValueText);
+    print("%s's Hand (Value: %s):", player.name, handValueText);
 
     for (Card card : player.hand.getCards()) {
       System.out.print(ANSI_WHITE_BG);
