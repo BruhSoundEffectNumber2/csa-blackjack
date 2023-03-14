@@ -60,12 +60,19 @@ public class Round {
      * filling the gap left by the now-removed element. An enhanced for loop
      * would error when A occurs, and a normal for loop would skip over the
      * next element when B occurs, as the current index is now the next element.
-     * To compensate for this, we start from the back and move to the front
-     * because the elements in front aren't affected by a removal.
+     * 
+     * To compensate for this, whenever we remove a player from the array,
+     * we first decrement i by 1 before the for loop automatically increments i.
+     * This effectively causes no change in the index, which is what we want.
+     * 
+     * We could also start at the end of the array and go to the front of the array,
+     * but this would cause us to go in the order of Player 4, 3, 2, and 1, when we
+     * normally go in order of Player 1, 2, 3, and 4.
      */
-    // TODO: It's a little bit weird how it goes from A, B, C, D to D, C, B, A
-    for (int i = activePlayers.size() - 1; i >= 0; i--) {
-      playerMove(activePlayers.get(i));
+    for (int i = 0; i < activePlayers.size(); i++) {
+      if (playerMove(activePlayers.get(i))) {
+        i--;
+      }
     }
 
     dealerMove();

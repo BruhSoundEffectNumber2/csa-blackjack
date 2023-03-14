@@ -108,9 +108,14 @@ public class DisplayManager {
 
     printHeader("Leaderboard - Top 10:");
 
-    // TODO: Adjust this to say "lost" when the amount is negative
     for (int i = 0; i < Math.min(10, entries.length); i++) {
-      print("%d - %s has won $%d", i + 1, entries[i].name, entries[i].moneyWon);
+      print("%d - %s has %s $%d",
+          i + 1,
+          entries[i].name,
+          // When we have net lost money, insert "lost" instead of "won"
+          Math.signum(entries[i].moneyWon) < 0 ? "lost" : "won",
+          // We already imply a sign with the word before this
+          Math.abs(entries[i].moneyWon));
     }
   }
 }
