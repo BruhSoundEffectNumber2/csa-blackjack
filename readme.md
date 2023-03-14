@@ -30,6 +30,10 @@ The code is organized the following main classes:
 
 - `DisplayManager`: Helper functions to display complex strings, cards, clear the screen, etc.
 
+- `Leaderboard`: A leaderboard, containing methods to save and load itself, and an array of entries in the leaderboard.
+
+- `LeaderboardEntry`: An entry in the leaderboard, containing their name and some other info.
+
 ## Replit
 
 This project is developed using Visual Studio Code, but Replit will work out of the box, just press the Run button.

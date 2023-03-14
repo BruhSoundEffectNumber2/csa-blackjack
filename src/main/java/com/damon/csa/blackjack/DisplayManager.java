@@ -1,6 +1,8 @@
 package com.damon.csa.blackjack;
 
 import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class DisplayManager {
   ///////////////////////////////
@@ -81,5 +83,34 @@ public class DisplayManager {
     }
 
     System.out.print("\n");
+  }
+
+  public void displayLeaderboard(Leaderboard leaderboard) {
+    LeaderboardEntry[] entries = leaderboard.getEntries();
+
+    Arrays.sort(entries, new Comparator<>() {
+      /*
+       * When we create our own object, Java can't know how it should be
+       * sorted, so it leaves that to us. In this case, we use the money
+       * the player won as the metric for sorting.
+       */
+      @Override
+      public int compare(LeaderboardEntry o1, LeaderboardEntry o2) {
+        // Standard convention is to return -1 when o1 < o2, but we want the highest
+        // first, so we invert that
+        if (o1.moneyWon < o2.moneyWon)
+          return 1;
+        if (o1.moneyWon > o2.moneyWon)
+          return -1;
+        return 0;
+      }
+    });
+
+    printHeader("Leaderboard - Top 10:");
+
+    // TODO: Adjust this to say "lost" when the amount is negative
+    for (int i = 0; i < Math.min(10, entries.length); i++) {
+      print("%d - %s has won $%d", i + 1, entries[i].name, entries[i].moneyWon);
+    }
   }
 }

@@ -6,15 +6,10 @@ public class Round {
   ///////////////////////////////
   // Properties
   ///////////////////////////////
-  // The number of player's who haven't gone bust
-  private int activePlayers;
-
-  // TODO: Players should include all players, not just those who aren't bust
 
   private ArrayList<Player> players;
 
-  // Players who lost are not in the running anymore
-  private ArrayList<Player> losers;
+  private ArrayList<Player> activePlayers;
 
   private Player dealer;
   private Deck deck;
@@ -22,22 +17,29 @@ public class Round {
   private InputManager input;
   private DisplayManager output;
 
+  private Leaderboard leaderboard;
+
   ///////////////////////////////
   // Constructor
   ///////////////////////////////
 
-  public Round(ArrayList<Player> players, InputManager input, DisplayManager output) {
-    this.activePlayers = players.size();
-
+  // TODO: Can we reduce the amount of stuff we pass into the constructor?
+  public Round(
+      ArrayList<Player> players,
+      InputManager input,
+      DisplayManager output,
+      Leaderboard leaderboard) {
     this.input = input;
     this.output = output;
 
     this.dealer = new Player("Gus 'Dealer' Reiber", true);
 
     this.players = new ArrayList<>(players);
-    this.losers = new ArrayList<>();
+    this.activePlayers = new ArrayList<>(players);
 
     this.deck = new Deck();
+
+    this.leaderboard = leaderboard;
   }
 
   ///////////////////////////////
@@ -51,18 +53,19 @@ public class Round {
 
     dealCards();
 
-    int i = 0;
-    while (i < activePlayers) {
-      /*
-       * A while loop is used here because the players array changes during this loop.
-       * When a player goes bust, they are removed from the array and all
-       * other players have their indicies shifted down by 1. In that scenario,
-       * the next player will have the same index as the previous player, so we only
-       * increment i when the player doesn't go bust.
-       */
-      if (playerMove(players.get(i)) == false) {
-        i++;
-      }
+    /*
+     * The method 'playerMove' removes players from activePlayers when they
+     * go bust. When that happens, we A) mutate the ArrayList itself and
+     * B) shift all elements after the removed element down by 1,
+     * filling the gap left by the now-removed element. An enhanced for loop
+     * would error when A occurs, and a normal for loop would skip over the
+     * next element when B occurs, as the current index is now the next element.
+     * To compensate for this, we start from the back and move to the front
+     * because the elements in front aren't affected by a removal.
+     */
+    // TODO: It's a little bit weird how it goes from A, B, C, D to D, C, B, A
+    for (int i = activePlayers.size() - 1; i >= 0; i--) {
+      playerMove(activePlayers.get(i));
     }
 
     dealerMove();
@@ -84,12 +87,6 @@ public class Round {
       }
     }
 
-    for (Player player : losers) {
-      if (player.cash < Game.MIN_BET) {
-        list.add(player);
-      }
-    }
-
     return list.toArray(new Player[] {});
   }
 
@@ -97,14 +94,10 @@ public class Round {
     for (Player player : players) {
       player.reset();
     }
-
-    for (Player player : losers) {
-      player.reset();
-    }
   }
 
   private void getBets() {
-    for (Player player : players) {
+    for (Player player : activePlayers) {
       output.clearScreen();
 
       output.printHeader("Getting Player Info");
@@ -120,17 +113,13 @@ public class Round {
   }
 
   private void removePlayer(Player player) {
-    int index = players.indexOf(player);
+    int index = activePlayers.indexOf(player);
 
-    players.remove(index);
-
-    activePlayers--;
-
-    losers.add(player);
+    activePlayers.remove(index);
   }
 
   private void dealCards() {
-    for (Player player : players) {
+    for (Player player : activePlayers) {
       player.hand.addCard(deck.deal());
       player.hand.addCard(deck.deal());
     }
@@ -270,10 +259,15 @@ public class Round {
   private void showPlayerResults(int dealerHand) {
     ArrayList<Player> winning = new ArrayList<>();
     ArrayList<Player> drawing = new ArrayList<>();
-    // Start the losing list with people who went bust
-    ArrayList<Player> losing = new ArrayList<>(losers);
+    ArrayList<Player> losing = new ArrayList<>();
 
     for (Player player : players) {
+      // People who go bust always lose
+      if (activePlayers.contains(player) == false) {
+        losing.add(player);
+        continue;
+      }
+
       if (dealerHand > 21) {
         winning.add(player);
       } else {
@@ -294,6 +288,8 @@ public class Round {
         delay(200);
 
         player.cash += player.bet;
+        leaderboard.addEntryWin(player.name);
+        leaderboard.addEntryMoney(player.name, player.bet);
         output.print("%s won $%d and has $%d", player.name, player.bet, player.cash);
       }
 
@@ -321,6 +317,7 @@ public class Round {
         delay(200);
 
         player.cash -= player.bet;
+        leaderboard.addEntryMoney(player.name, -player.bet);
         output.print("%s lost $%d and has $%d", player.name, player.bet, player.cash);
       }
 

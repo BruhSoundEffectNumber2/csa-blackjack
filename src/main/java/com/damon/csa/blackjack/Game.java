@@ -13,6 +13,8 @@ public class Game {
   private InputManager input;
   private DisplayManager output;
 
+  private Leaderboard leaderboard;
+
   private Round currentRound;
 
   private ArrayList<Player> players;
@@ -25,6 +27,8 @@ public class Game {
     this.input = new InputManager(System.in);
     this.output = new DisplayManager(System.out);
 
+    this.leaderboard = new Leaderboard();
+
     this.players = new ArrayList<>();
   }
 
@@ -35,15 +39,22 @@ public class Game {
   public void start() {
     output.clearScreen();
 
-    output.printHeader("Blackjack");
+    leaderboard.load();
+
+    output.printHeader("Welcome to Blackjack");
+    output.displayLeaderboard(leaderboard);
+    output.newline();
+
     output.print("How many people will be playing (1 to 4)?");
 
     createPlayers(input.getNumber(1, 4));
 
     while (true) {
       // Play a round
-      currentRound = new Round(players, input, output);
+      currentRound = new Round(players, input, output, leaderboard);
       currentRound.play();
+
+      leaderboard.save();
 
       removeDonePlayers();
 
@@ -75,12 +86,27 @@ public class Game {
 
   private void createPlayers(int number) {
     for (int i = 0; i < number; i++) {
-      output.clearScreen();
+      String name = "";
 
-      output.printHeader("Getting Player Info");
-      output.print("Player %d, what is your name?", (i + 1));
+      while (true) {
+        output.clearScreen();
 
-      String name = input.getTrimmedText();
+        output.printHeader("Getting Player Info");
+        output.print("Player %d, what is your name?", (i + 1));
+
+        name = input.getTrimmedText();
+
+        if (leaderboard.isNameTaken(name) == false) {
+          leaderboard.addNewEntry(name);
+          break;
+        }
+
+        output.newline();
+
+        output.print("The name %s has been used before. Are you %s?", name, name);
+        if (input.getDecision(new String[] { "Yes", "No" }) == 0)
+          break;
+      }
 
       players.add(i, new Player(name, false));
     }
